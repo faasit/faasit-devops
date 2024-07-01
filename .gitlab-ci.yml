@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Creating deployment file"
+    - touch /path/to/deployment_file
+  only:
+    - main
