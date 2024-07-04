@@ -5,7 +5,7 @@ from faasit_runtime.runtime import FaasitRuntime
 async def f(frt: FaasitRuntime):
     _in = frt.input()
     _out = {
-        "hello":"world"
+        "hello":"world1"
     }
     return frt.output(_out)
 
