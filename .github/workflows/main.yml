@@ -22,8 +22,8 @@ jobs:
         
       - name: Faasit deploy
         env:
-          ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
-          ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
-          ALIYUN_REGION: ${{ secrets.ALIYUN_REGION }}
-          ALIYUN_ACCOUNT_ID: ${{ secrets.ALIYUN_ACCOUNT_ID }}
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID }}
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
+          FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
+          FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
         run: ft deploy -p Aliyun
