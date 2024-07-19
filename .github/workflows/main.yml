@@ -21,4 +21,9 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Faasit deploy
-        run: ft deploy
+        env:
+          ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+          ALIYUN_REGION: ${{ secrets.ALIYUN_REGION }}
+          ALIYUN_ACCOUNT_ID: ${{ secrets.ALIYUN_ACCOUNT_ID }}
+        run: ft deploy -p Aliyun
