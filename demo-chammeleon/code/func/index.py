@@ -36,7 +36,7 @@ def handle_func(frt:FaasitRuntime):
     </head>
     <body>
         <h1>Welcome to ${title}!</h1>
-        <p>Hello, ${user}! Thank you for visiting.</p>
+        <p>Hello, ${user}! Thank you for visiting!</p>
         <ul>
             <li tal:repeat="item items">
                 ${item}
