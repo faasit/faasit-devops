@@ -16,12 +16,21 @@ jobs:
         working-directory: ./demo-chammeleon
     if: github.ref == 'refs/heads/main'
 
+    env:
+      IMAGE_NAME: 'chammeleon-stage0:tmp'
+      DOCKER_REGISTRY: 'localhost:5000'
+
     steps:
       - name: Checkout code
         uses: taiki-e/checkout-action@v1
 
       - name: Faasit build
         run: ft build
-        
+
+      - name: Tag and push Docker image
+        run: |
+          docker tag $IMAGE_NAME $DOCKER_REGISTRY/library/$IMAGE_NAME
+          docker push $DOCKER_REGISTRY/library/$IMAGE_NAME
+
       - name: Faasit deploy
         run: ft deploy
