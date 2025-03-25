@@ -3,10 +3,11 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - aliyun
+      - aliyun-canary
+      - knative
+      - knative-canary
+      - multi-env
 
 jobs:
   deploy:
@@ -14,16 +15,51 @@ jobs:
     defaults:
       run:
         working-directory: ./hello
-    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
-      - name: Faasit deploy
+
+      # 阿里云即时发布
+      - name: Faasit deploy to Aliyun (Production)
+        if: github.ref == 'refs/heads/aliyun'
         env:
           FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID }}
           FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
           FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
           FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
         run: ft deploy -p aliyun
+
+      # TODO: 阿里云灰度发布
+      - name: Faasit deploy to Aliyun (Canary)
+        if: github.ref == 'refs/heads/aliyun-canary'
+        env:
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID }}
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
+          FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
+          FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
+        run: ft deploy -p aliyun
+
+      # Knative即时发布
+      - name: Faasit deploy to Knative (Production)
+        if: github.ref == 'refs/heads/knative'
+        run: ft deploy -p knative
+
+      # TODO: Knative灰度发布
+      - name: Faasit deploy to Knative (Canary)
+        if: github.ref == 'refs/heads/knative-canary'
+        run: ft deploy -p knative
+
+      # 多环境发布（同时部署到阿里云和Knative）
+      - name: Faasit deploy to Aliyun (Multi-env)
+        if: github.ref == 'refs/heads/multi-env'
+        env:
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID }}
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
+          FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
+          FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
+        run: ft deploy -p aliyun
+
+      - name: Faasit deploy to Knative (Multi-env)
+        if: github.ref == 'refs/heads/multi-env'
+        run: ft deploy -p knative
