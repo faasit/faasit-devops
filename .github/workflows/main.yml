@@ -13,24 +13,17 @@ jobs:
     runs-on: self-hosted
     defaults:
       run:
-        working-directory: ./demo-chammeleon
+        working-directory: ./hello
     if: github.ref == 'refs/heads/main'
-
-    env:
-      IMAGE_NAME: 'chammeleon-stage0:tmp'
-      DOCKER_REGISTRY: 'localhost:5000'
 
     steps:
       - name: Checkout code
-        uses: taiki-e/checkout-action@v1
-
-      - name: Faasit build
-        run: ft build
-
-      - name: Tag and push Docker image
-        run: |
-          docker tag $IMAGE_NAME $DOCKER_REGISTRY/library/$IMAGE_NAME
-          docker push $DOCKER_REGISTRY/library/$IMAGE_NAME
-
+        uses: actions/checkout@v3
+        
       - name: Faasit deploy
-        run: ft deploy
+        env:
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID }}
+          FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
+          FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
+          FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
+        run: ft deploy -p aliyun

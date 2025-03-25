@@ -4,8 +4,8 @@ stages:
 deploy:
   stage: deploy
   script:
-    - cd helloworld
+    - cd hello
     - echo "Running ft deploy"
-    - ft deploy -p Aliyun
+    - ft deploy -p aliyun
   only:
     - main
