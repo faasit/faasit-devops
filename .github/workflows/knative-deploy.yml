@@ -22,7 +22,7 @@ jobs:
         if: github.ref == 'refs/heads/knative'
         run: ft deploy -p knative
 
-      # TODO: Knative (Canary)
+      # Knative (Canary)
       - name: Faasit deploy to Knative (Canary)
         if: github.ref == 'refs/heads/knative-canary'
-        run: ft deploy -p knative
+        run: ft deploy -p knative --canary

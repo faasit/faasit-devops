@@ -27,7 +27,7 @@ jobs:
           FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
         run: ft deploy -p aliyun
 
-      # TODO: Aliyun (Canary)
+      # Aliyun (Canary)
       - name: Faasit deploy to Aliyun (Canary)
         if: github.ref == 'refs/heads/aliyun-canary'
         env:
@@ -35,4 +35,4 @@ jobs:
           FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
           FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
           FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
-        run: ft deploy -p aliyun
+        run: ft deploy -p aliyun --canary

@@ -11,7 +11,7 @@ git add "$FILE"
 git commit -m "test on: ${CURRENT_TIME}"
 
 # push branches to trigger CI/CD
-BRANCHES=("master" "aliyun" "knative" "multi-env")
+BRANCHES=("main" "aliyun" "knative" "k8s" "aliyun-canary" "knative-canary" "k8s-canary" "multi-env")
 
 for branch in "${BRANCHES[@]}"; do
   git checkout -B "$branch"
@@ -19,4 +19,4 @@ for branch in "${BRANCHES[@]}"; do
   echo "Push branch [$branch] and trigger CI/CD."
 done
 
-git checkout master
+git checkout main
