@@ -7,12 +7,18 @@
 @application helloapp {
     functions = [hello]
     defaultProvider = aliyun
-    providers = [aliyun, knative]
+    providers = [aliyun, knative, k8s]
     inputExamples = [
         {
             value = {
                 text = "Hello world this is a happy day"
                 batchSize = 3
+            }
+        },
+        {
+            value = {
+                text2 = "Hello world this is a happy day 2"
+                batchSize = 2
             }
         }
     ]
@@ -24,5 +30,10 @@
 
 @provider knative {
     kind = 'knative'
+    registry = "192.168.28.220:5000"
+}
+
+@provider k8s {
+    kind = 'k8s'
     registry = "192.168.28.220:5000"
 }
