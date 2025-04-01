@@ -18,7 +18,7 @@ BRANCHES=("main" "aliyun" "knative" "k8s" "aliyun-canary" "knative-canary" "k8s-
 for branch in "${BRANCHES[@]}"; do
   git checkout -B "$branch"
   if [[ "$branch" == *"-canary" ]]; then
-    sed -i 's/rt.input()\["isCanary"\] = False/rt.input()["isCanary"] = True/' "$FILE"
+    sed -i 's/"isCanary": False/"isCanary": True/' "$FILE"
     git add "$FILE"
     git commit -m "Set isCanary to True for $branch on: ${CURRENT_TIME}"
   fi
