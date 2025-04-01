@@ -26,4 +26,4 @@ for branch in "${BRANCHES[@]}"; do
   echo "Push branch [$branch] and trigger CI/CD."
 done
 
-# git checkout main
+git checkout main
