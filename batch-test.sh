@@ -10,7 +10,7 @@ echo "TIME: ${CURRENT_TIME}"
 
 # commit code
 git add "$FILE"
-# git commit -m "test on: ${CURRENT_TIME}"
+git commit -m "test on: ${CURRENT_TIME}"
 
 # push branches to trigger CI/CD
 # BRANCHES=("main" "aliyun" "knative" "k8s" "aliyun-canary" "knative-canary" "k8s-canary" "multi-env")
