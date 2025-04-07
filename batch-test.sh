@@ -5,7 +5,7 @@ git checkout main
 # modify code
 FILE="./hello/code/index.py"
 CURRENT_TIME=$(TZ=Asia/Shanghai date +"%Y-%m-%d %H:%M:%S UTC+8")
-sed -i "s/# Modified on .*/# Modified on ${CURRENT_TIME}/" "$FILE"
+sed -i "s/\"deploy_time\": \".*\"/\"deploy_time\": \"${CURRENT_TIME}\"/" "$FILE"
 echo "TIME: ${CURRENT_TIME}"
 
 # commit code
