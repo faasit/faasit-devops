@@ -20,6 +20,10 @@ jobs:
       # K8s
       - name: Faasit deploy to k8s (Production)
         if: github.ref == 'refs/heads/k8s'
+        run: ft build -p k8s
+
+      - name: Faasit deploy to k8s (Production)
+        if: github.ref == 'refs/heads/k8s'
         run: ft deploy -p k8s
 
       - name: Invoke k8s Function (Production)
@@ -29,4 +33,12 @@ jobs:
       # K8s (Canary)
       - name: Faasit deploy to K8s (Canary)
         if: github.ref == 'refs/heads/k8s-canary'
+        run: ft build -p k8s --canary
+
+      - name: Faasit deploy to K8s (Canary)
+        if: github.ref == 'refs/heads/k8s-canary'
         run: ft deploy -p k8s --canary
+
+      - name: Faasit deploy to K8s (Canary)
+        if: github.ref == 'refs/heads/k8s-canary'
+        run: ft invoke -p k8s

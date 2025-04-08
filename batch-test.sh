@@ -14,7 +14,7 @@ git commit -m "test on: ${CURRENT_TIME}"
 
 # push branches to trigger CI/CD
 # BRANCHES=("main" "aliyun" "knative" "k8s" "aliyun-canary" "knative-canary" "k8s-canary" "multi-env")
-BRANCHES=("main" "k8s")
+BRANCHES=("main" "k8s" "k8s-canary" "aliyun" "aliyun-canary" "knative" "knative-canary")
 
 for branch in "${BRANCHES[@]}"; do
   git checkout -B "$branch"
