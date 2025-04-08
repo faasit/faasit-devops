@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       # K8s
-      - name: Faasit deploy to k8s (Production)
+      - name: Build image (Production)
         if: github.ref == 'refs/heads/k8s'
         run: ft build -p k8s
 
@@ -27,11 +27,11 @@ jobs:
         run: ft deploy -p k8s
 
       - name: Invoke k8s Function (Production)
-        if: github.ref == 'refs/heads/aliyun'
+        if: github.ref == 'refs/heads/k8s'
         run: ft invoke -p k8s
 
       # K8s (Canary)
-      - name: Faasit deploy to K8s (Canary)
+      - name: Build image (Canary)
         if: github.ref == 'refs/heads/k8s-canary'
         run: ft build -p k8s --canary
 
@@ -39,6 +39,6 @@ jobs:
         if: github.ref == 'refs/heads/k8s-canary'
         run: ft deploy -p k8s --canary
 
-      - name: Faasit deploy to K8s (Canary)
+      - name: Invoke k8s Function (Canary)
         if: github.ref == 'refs/heads/k8s-canary'
         run: ft invoke -p k8s
