@@ -14,15 +14,22 @@ git commit -m "test on: ${CURRENT_TIME}"
 
 # push branches to trigger CI/CD
 # BRANCHES=("main" "aliyun" "knative" "k8s" "aliyun-canary" "knative-canary" "k8s-canary" "multi-env")
-BRANCHES=("main" "k8s" "k8s-canary" "aliyun" "aliyun-canary" "knative" "knative-canary")
+BRANCHES=("main" "k8s" "aliyun" "knative" "multi-env")
 
 for branch in "${BRANCHES[@]}"; do
   git checkout -B "$branch"
-  if [[ "$branch" == *"-canary" ]]; then
-    sed -i 's/"isCanary": False/"isCanary": True/' "$FILE"
-    git add "$FILE"
-    git commit -m "Set isCanary to True for $branch on: ${CURRENT_TIME}"
-  fi
+  git push --force-with-lease origin "$branch"
+  echo "Push branch [$branch] and trigger CI/CD."
+done
+
+BRANCHES=("k8s-canary" "aliyun-canary" "knative-canary")
+
+sed -i 's/"isCanary": False/"isCanary": True/' "$FILE"
+git add "$FILE"
+git commit -m "Set isCanary to True on: ${CURRENT_TIME}"
+
+for branch in "${BRANCHES[@]}"; do
+  git checkout -B "$branch"
   git push --force-with-lease origin "$branch"
   echo "Push branch [$branch] and trigger CI/CD."
 done
