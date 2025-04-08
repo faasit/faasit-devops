@@ -17,6 +17,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Clean old deployment
+        run: kubectl delete ksvc helloapp-hello
+
       # K8s
       - name: Build image (Production)
         if: github.ref == 'refs/heads/k8s'
@@ -41,4 +44,4 @@ jobs:
 
       - name: Invoke k8s Function (Canary)
         if: github.ref == 'refs/heads/k8s-canary'
-        run: ft invoke -p k8s
+        run: ft invoke -p k8s --canary

@@ -16,13 +16,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Faasit deploy to Aliyun (Multi-env)
+      - name: Clean old deployment
+        run: kubectl delete ksvc helloapp-hello
+
+      - name: Aliyun (Multi-env)
         env:
           FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_ID }}
           FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCESS_KEY_SECRET }}
           FAASIT_SECRET_ALIYUN_REGION: ${{ secrets.FAASIT_SECRET_ALIYUN_REGION }}
           FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
-        run: ft deploy -p aliyun
+          ALIBABA_CLOUD_OSS_BUCKET_NAME: ${{ secrets.ALIBABA_CLOUD_OSS_BUCKET_NAME }}
+          ALIBABA_CLOUD_OSS_REGION: ${{ secrets.ALIBABA_CLOUD_OSS_REGION }}
+        run: ft deploy -p aliyun && ft invoke -p aliyun
 
-      - name: Faasit deploy to Knative (Multi-env)
-        run: ft deploy -p knative
+      - name: Knative (Multi-env)
+        run: ft build -p knative && ft deploy -p knative

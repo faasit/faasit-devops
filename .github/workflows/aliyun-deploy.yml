@@ -41,4 +41,4 @@ jobs:
 
       - name: Invoke Aliyun Function (Canary)
         if: github.ref == 'refs/heads/aliyun-canary'
-        run: ft invoke -p aliyun --canary && ft invoke -p aliyun
+        run: ft invoke -p aliyun --canary
