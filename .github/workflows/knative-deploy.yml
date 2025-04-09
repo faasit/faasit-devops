@@ -31,7 +31,7 @@ jobs:
 
       - name: Invoke knative Function (Production)
         if: github.ref == 'refs/heads/knative'
-        run: ft invoke -p knative
+        run: ft invoke -p knative --retry 100
 
 
       # Knative (Canary)
@@ -43,6 +43,6 @@ jobs:
         if: github.ref == 'refs/heads/knative-canary'
         run: ft deploy -p knative --canary
 
-      - name: Invoke k8s Function (Canary)
+      - name: Invoke Knative Function (Canary)
         if: github.ref == 'refs/heads/knative-canary'
-        run: ft invoke -p knative --canary
+        run: ft invoke -p knative --canary --retry 100

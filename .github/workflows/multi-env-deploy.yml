@@ -30,4 +30,4 @@ jobs:
         run: ft deploy -p aliyun && ft invoke -p aliyun
 
       - name: Knative (Multi-env)
-        run: ft build -p knative && ft deploy -p knative && ft invoke -p knative
+        run: ft build -p knative && ft deploy -p knative && ft invoke -p knative --retry 100
