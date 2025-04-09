@@ -35,7 +35,7 @@ jobs:
 
 
       # Knative (Canary)
-      - name: Faasit deploy to Knative (Canary)
+      - name: Build image (Canary)
         if: github.ref == 'refs/heads/knative-canary'
         run: ft build -p knative --canary
 

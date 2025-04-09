@@ -32,7 +32,7 @@ jobs:
 
       - name: Invoke Aliyun Function (Production)
         if: github.ref == 'refs/heads/aliyun'
-        run: ft invoke -p aliyun
+        run: sleep 3 && ft invoke -p aliyun
 
       # Canary
       - name: Faasit deploy to Aliyun (Canary)
@@ -41,4 +41,4 @@ jobs:
 
       - name: Invoke Aliyun Function (Canary)
         if: github.ref == 'refs/heads/aliyun-canary'
-        run: ft invoke -p aliyun --canary
+        run: sleep 3 && ft invoke -p aliyun --canary
