@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clean old deployment
-        run: kubectl delete ksvc helloapp-hello
+        run: kubectl delete svc helloapp-hello pod helloapp-hello ksvc helloapp-hello --ignore-not-found
 
       - name: Aliyun (Multi-env)
         env:
