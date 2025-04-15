@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clean old deployment
-        run: kubectl delete ksvc helloapp-hello
+        run: kubectl delete ksvc helloapp-hello --ignore-not-found && kubectl delete pods --force --all && kubectl delete svc --all
 
       - name: Aliyun (Multi-env)
         env:
@@ -27,7 +27,7 @@ jobs:
           FAASIT_SECRET_ALIYUN_ACCOUNT_ID: ${{ secrets.FAASIT_SECRET_ALIYUN_ACCOUNT_ID }}
           ALIBABA_CLOUD_OSS_BUCKET_NAME: ${{ secrets.ALIBABA_CLOUD_OSS_BUCKET_NAME }}
           ALIBABA_CLOUD_OSS_REGION: ${{ secrets.ALIBABA_CLOUD_OSS_REGION }}
-        run: ft deploy -p aliyun && ft invoke -p aliyun
+        run: ft deploy -p aliyun && sleep 3 && ft invoke -p aliyun
 
       - name: Knative (Multi-env)
-        run: ft build -p knative && ft deploy -p knative
+        run: ft build -p knative && ft deploy -p knative && ft invoke -p knative --retry 100

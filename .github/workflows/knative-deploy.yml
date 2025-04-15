@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clean old deployment
-        run: kubectl delete ksvc helloapp-hello
+        run: kubectl delete ksvc helloapp-hello --ignore-not-found && kubectl delete pods --force --all && kubectl delete svc --all
 
       # Knative
       - name: Build image (Production)
@@ -31,18 +31,18 @@ jobs:
 
       - name: Invoke knative Function (Production)
         if: github.ref == 'refs/heads/knative'
-        run: ft invoke -p knative
+        run: ft invoke -p knative --retry 100
 
 
       # Knative (Canary)
-      - name: Faasit deploy to Knative (Canary)
+      - name: Build image (Canary)
         if: github.ref == 'refs/heads/knative-canary'
         run: ft build -p knative --canary
 
       - name: Faasit deploy to Knative (Canary)
-        if: github.ref == 'refs/heads/k8s-canary'
+        if: github.ref == 'refs/heads/knative-canary'
         run: ft deploy -p knative --canary
 
-      - name: Invoke k8s Function (Canary)
-        if: github.ref == 'refs/heads/k8s-canary'
-        run: ft invoke -p knative --canary
+      - name: Invoke Knative Function (Canary)
+        if: github.ref == 'refs/heads/knative-canary'
+        run: ft invoke -p knative --canary --retry 100

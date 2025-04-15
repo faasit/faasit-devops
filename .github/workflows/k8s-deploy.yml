@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Clean old deployment
-        run: kubectl delete ksvc helloapp-hello
+        run: kubectl delete ksvc helloapp-hello --ignore-not-found && kubectl delete pods --force --all && kubectl delete svc --all
 
       # K8s
       - name: Build image (Production)
